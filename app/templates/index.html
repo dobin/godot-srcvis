@@ -11,7 +11,10 @@
         {% for filename_base, entry in data.items() %}
             <tr>
                 <!-- 1 -->
-                <td>{{ filename_base }}</td>
+                <td>{{ filename_base }}<br>
+                    <br>
+                    {{ entry.rel_path }}
+                </td>
 
                 <!-- 2 -->
                 <td>
@@ -109,21 +112,36 @@
                 <!-- 4 -->
                 <td>
 
+                    {% if entry.entryScene.connections|length > 0 %}
                     <div>
+                        Connections:<br>
                         {% for s in entry.entryScene.connections %}
                             {{ s.res }} <br>
                         {% endfor %}
+                        <br>
                     </div>
+                    {% endif %}
+
+                    {% if entry.entryGdscript.connects|length > 0 %}
+                    <div>
+                        connect():<br>
+                        {% for s in entry.entryGdscript.connects %}
+                            {{ s.res }}  <br>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </td>
 
                 <!-- 5 -->
                 <td>
-                    connect():<br>
+                    {% if entry.entryGdscript.signals|length > 0 %}
                     <div>
-                        {% for s in entry.entryGdscript.connects %}
-                            {{ s.res }} <br>
+                        signal:<br>
+                        {% for s in entry.entryGdscript.signals %}
+                            {{ s.res }}<br>
                         {% endfor %}
                     </div>
+                    {% endif %}
                 </td>
 
             </tr>

@@ -29,6 +29,7 @@ class EntryGdscript():
         self.preloads = []
         self.news = []
         self.instantiates = []
+        self.signals = []
 
 
 class MyStr():

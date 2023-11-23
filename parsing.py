@@ -73,13 +73,20 @@ def parseGdscriptFile(filepath, relpath, entryGdscript: EntryGdscript):
 def parseGdscriptLine(line, entryGdscript):
     line = line.strip()
 
+    if line.startswith("signal "):
+        x = line[line.index(" "):]
+        entryGdscript.signals.append(MyStr(line, x))
     if '.connect(' in line:
         #print("---> {}".format(line))
         entryGdscript.connects.append(MyStr(line, line))
     if '$' in line:
         dollar_strings = extract_dollar_strings(line)
-        entryGdscript.dollars.append(MyStr(line, " ".join(dollar_strings)))
-        #print("---> {} / $:{}".format(line, dollar_strings))
+        if len(dollar_strings) > 0:
+            ds = dollar_strings[0].split(".")
+            ds = ds[0]
+            if not any(mystr.res == ds for mystr in entryGdscript.dollars):
+                entryGdscript.dollars.append(MyStr(line, ds))
+            #print("---> {} / $:{}".format(line, dollar_strings))
     if 'get_node' in line:
         x = line[line.find('get_node'):]
         entryGdscript.getnodes.append(MyStr(line, x))
