@@ -1,0 +1,133 @@
+<html>
+<body>
+    <table border="1">
+        <tr>
+            <th>Scene</th>
+            <th>Scene</th>
+            <th>GdScript</th>
+            <th>Signals Consume</th>
+            <th>Signals Emit</th>
+        </tr>
+        {% for filename_base, entry in data.items() %}
+            <tr>
+                <!-- 1 -->
+                <td>{{ filename_base }}</td>
+
+                <!-- 2 -->
+                <td>
+                    {% if entry.entryScene.ext_resources|length > 0 %}
+                    <div>
+                        Ext Resources:<br>
+                        {% for s in entry.entryScene.ext_resources %}
+                            {{ s.res }} <br>
+                        {% endfor %}
+                        <br>
+                    </div>
+                    {% endif %}
+
+                    {% if entry.entryScene.nodes|length > 0 %}
+                    <div>
+                        Nodes:<br>
+                        {% for s in entry.entryScene.nodes %}
+                            {{ s.res }} <br>
+                        {% endfor %}
+                        <br>
+                    </div>
+                    {% endif %}
+                    
+                    {% if entry.entryGdscript.dollars|length > 0 %}
+                    <div>
+                        $:<br>
+                        {% for s in entry.entryGdscript.dollars %}
+                            {{ s.res }} <br>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </td>
+
+                <!-- 3 -->
+                <td>
+                    {% if entry.entryGdscript.getnodes|length > 0 %}
+                    <div>
+                        Nodes:<br>
+                        {% for s in entry.entryGdscript.getnodes %}
+                            {{ s.res }} <br>
+                        {% endfor %}
+                        <br>
+                    </div>
+                    {% endif %}
+
+                    {% if entry.entryGdscript.loads|length > 0 %}
+                    <div>
+                        load():<br>
+                        {% for s in entry.entryGdscript.loads %}
+                            {{ s.res }} <br>
+                        {% endfor %}
+                        <br>
+                    </div>
+                    {% endif %}
+
+                    {% if entry.entryGdscript.preloads|length > 0 %}
+                    <div>
+                        preload():<br>
+                        {% for s in entry.entryGdscript.preloads %}
+                            {{ s.res }} <br>
+                        {% endfor %}
+                        <br>
+                    </div>
+                    {% endif %}
+
+                    {% if entry.entryGdscript.news|length > 0 %}
+                    <div>
+                        New():<br>
+                        {% for s in entry.entryGdscript.news %}
+                            {{ s.res }} <br>
+                        {% endfor %}
+                        <br>
+                    </div>
+                    {% endif %}
+
+                    {% if entry.entryGdscript.instantiates|length > 0 %}
+                    <div>
+                        Instantiate():<br>
+                        {% for s in entry.entryGdscript.instantiates %}
+                            {{ s.res }} <br>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </td>
+                <!--
+                <td>
+                    <div>
+                        {% for s in entry.entryScene.sub_resources %}
+                            {{ s.res }} <br>
+                        {% endfor %}
+                    </div>
+                </td>
+                -->
+
+                <!-- 4 -->
+                <td>
+
+                    <div>
+                        {% for s in entry.entryScene.connections %}
+                            {{ s.res }} <br>
+                        {% endfor %}
+                    </div>
+                </td>
+
+                <!-- 5 -->
+                <td>
+                    connect():<br>
+                    <div>
+                        {% for s in entry.entryGdscript.connects %}
+                            {{ s.res }} <br>
+                        {% endfor %}
+                    </div>
+                </td>
+
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
