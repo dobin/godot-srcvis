@@ -2,9 +2,10 @@
 
 from typing import List
 import os
+from pathlib import Path
 
 from model import *
-from parsing import *
+from parsing.fileparser import *
 
 
 projPath = "/mnt/c/Users/dobin/Repos/godot-helloworld/"

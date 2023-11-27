@@ -30,9 +30,12 @@ class EntryGdscript():
         self.news = []
         self.instantiates = []
         self.signals = []
+        self.emits = []
+        self.exports = []
 
 
 class MyStr():
-    def __init__(self, orig, res):
+    def __init__(self, orig, res, pointing_to=None):
         self.orig = orig
         self.res = res
+        self.pointing_to = pointing_to

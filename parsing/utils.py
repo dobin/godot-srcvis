@@ -35,3 +35,32 @@ def extract_dollar_strings(input_string):
     return dollar_strings
 
 
+
+#############
+
+def first_non_alpha_offset(line):
+    for idx in range(0, len(line)):
+        if line[idx] == '$':
+            continue
+
+        if not line[idx].isalnum():
+            return idx
+
+    return len(line)
+
+
+def cut_from_to(line, frm, to):
+    a_idx = line.index(frm) + len(frm)
+    line_rest = line[a_idx:]
+    b_idx = line_rest.index(to)
+
+    return line[a_idx:b_idx+a_idx]
+
+    #for idx in range(0, len(line)):
+    #    if line[idx] == '$':
+    #        continue
+#
+ #       if not line[idx].isalnum():
+  #          return idx
+
+        

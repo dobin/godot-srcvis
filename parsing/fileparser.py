@@ -1,6 +1,7 @@
-from utils import *
-from pathlib import Path
+from parsing.utils import *
 
+
+from parsing.lineparser import *
 from model import *
 
 
@@ -73,38 +74,36 @@ def parseGdscriptFile(filepath, relpath, entryGdscript: EntryGdscript):
 def parseGdscriptLine(line, entryGdscript):
     line = line.strip()
 
+    if line.startswith("#"):
+        return
+
     if line.startswith("signal "):
-        x = line[line.index(" "):]
+        x = parse_line_signal(line)
         entryGdscript.signals.append(MyStr(line, x))
     if '.connect(' in line:
-        #print("---> {}".format(line))
-        entryGdscript.connects.append(MyStr(line, line))
+        x = parse_line_connect(line)
+        entryGdscript.connects.append(MyStr(line, x))
     if '$' in line:
-        dollar_strings = extract_dollar_strings(line)
-        if len(dollar_strings) > 0:
-            ds = dollar_strings[0].split(".")
-            ds = ds[0]
-            if not any(mystr.res == ds for mystr in entryGdscript.dollars):
-                entryGdscript.dollars.append(MyStr(line, ds))
-            #print("---> {} / $:{}".format(line, dollar_strings))
-    if 'get_node' in line:
-        x = line[line.find('get_node'):]
+        x = parse_line_connect(line)
+        entryGdscript.dollars.append(MyStr(line, x))  # doubles
+    if '.get_nodes_in_group' in line:
+        x = parse_line_get_node_in_group(line)
         entryGdscript.getnodes.append(MyStr(line, x))
-        #print("---> {} / gn:{}".format(line, x))
-    if 'load(' in line:
-        x = line[line.find('load'):]
+    if '.load(' in line:
+        x = parse_line_load(line)
         entryGdscript.loads.append(MyStr(line, x))
-        #print("---> {} / l:{}".format(line, x))
-    if 'preload(' in line:
-        x = line[line.find('preload'):]
-        #print("---> {} / p:{}".format(line, x))
+    if '.preload(' in line:
+        x = parse_line_preload(line)
         entryGdscript.preloads.append(MyStr(line, x))
-    if 'new(' in line:
-        x = find_word_before_string(line, "new(")
-        #print("---> {} / n:{}".format(line, x))
+    if '.new(' in line:
+        x = parse_line_new(line)
         entryGdscript.news.append(MyStr(line, x))
-    if 'instantiate(' in line:
-        x = find_word_before_string(line, "instantiate(")
+    if '.instantiate(' in line:
+        x = parse_line_instantiate(line)
         entryGdscript.instantiates.append(MyStr(line, x))
-        #print("---> {} / i:{}".format(line, x))
-        #print("---> {}".format(line))
+    if '.emit(' in line:
+        x = parse_line_emit(line)
+        entryGdscript.emits.append(MyStr(line, x))
+    if '@export' in line:
+        x = parse_line_export(line)
+        entryGdscript.exports.append(MyStr(line, x))
